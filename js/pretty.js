@@ -70,8 +70,17 @@ var makeTranslateString = function(x,y)
 var drawAxes = function(graphDim,margins,
                          xScale,yScale)
 {
-   
- 
+  var xAxes=d3.axisBottom(xScale);
+    var yAxes=d3.axisLeft(yScale);
+    var axes=d3.select("svg")
+        .append("g")
+    axes.append("g")
+    .attr("transform","translate("+margins.left+","+(margins.top+graphDim.height)+")")
+        .call(xAxes);
+ axes.append("g")
+    .attr("transform","translate("+margins.left+","
+             +(margins.top)+")")
+    .call(yAxes)
 }
 
 
@@ -79,7 +88,38 @@ var drawAxes = function(graphDim,margins,
 //margins - objedct that stores the size of the margins
 var drawLabels = function(graphDim,margins)
 {
-    
+    var labels=d3.select("svg")
+        .append("g")
+        .classed("labels",true)
+    labels.append("text")
+        .text("Trump Support in Counties")
+        .classed("title",true)
+        .attr("text-anchor","middle")
+        .attr("x",graphDim.width/2+margins.left)
+        .attr("y",margins.top)
+   /* labels.attr("transform","translate(20,"+ 
+              (margins.top+(graphDim.height/2))+")")
+        .append("text")
+        .text("Percentage voting for Trump")
+        .classed("label",true)
+        .attr("text-anchor","middle")
+        .attr("transform","rotate(270)")*/
+    labels.append("text")
+        .text("Percentage of Population which is Caucasian")
+        .classed("label",true)
+        .attr("text-anchor","middle")
+        .attr("x",margins.left+(graphDim.width/2))
+        .attr("y",margins.top+graphDim.height+30)
+    var labels2=d3.select("svg")
+        .append("g")
+        .classed("labels",true)
+    labels2.attr("transform","translate(20,"+ 
+              (margins.top+(graphDim.height/2))+")")
+        .append("text")
+        .text("Percentage voting for Trump")
+        .classed("label",true)
+        .attr("text-anchor","middle")
+        .attr("transform","rotate(270)")
 }
 
 
@@ -98,9 +138,19 @@ var drawLegend = function(graphDim,margins)
        }
     ]
 
-
+/*var legend=d3.select("svg")
+    .append("g")
+    .attr("transform","translate("+(margins.left+graphDim.width-50)+","+(margins.top+20)+")")
+var entries=legend.selectAll("g")
+    .data(categories)
+    .enter()
     
-    
+  legend.append("circle")
+        .attr("r",10)
+        .classed(categories.class,true)
+    legend.append("text")
+        .text(categories.name)
+    */
     
 }
 
@@ -110,7 +160,7 @@ var initGraph = function(counties)
     //size of screen
     var screen = {width:800,height:600}
     //how much space on each side
-    var margins = {left:30,right:20,top:20,bottom:30}
+    var margins = {left:50,right:20,top:50,bottom:40}
     
     
     
